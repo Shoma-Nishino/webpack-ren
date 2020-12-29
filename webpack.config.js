@@ -21,6 +21,18 @@ module.exports = {
                         loader: 'css-loader',
                     }
                 ]
+            },
+            {
+                test: /\.(png|jpg|jpeg|icon|svg|mp4)/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            esModule: false,
+                            name: 'images/[name].[ext]',
+                        }
+                    }
+                ]
             }
         ]
     },
