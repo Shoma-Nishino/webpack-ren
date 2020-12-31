@@ -2,8 +2,12 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+    // mode: 'production',
+    mode: 'development',
+    devtool: 'source-map',
     entry: './src/js/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -12,6 +16,39 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(ts|tsx)/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.vue/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'vue-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.js/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                ['@babel/preset-env', { 'targets' : '> 0.25%, not dead' }],
+                                '@babel/preset-react',
+                            ],
+                        },
+                    },
+                ]
+            },
+            {
                 test: /\.(css|sass|scss)/,
                 use: [
                     {
@@ -19,6 +56,19 @@ module.exports = {
                     },
                     {
                         loader: 'css-loader',
+                        options: {
+                          sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                              plugins: [
+                                ["autoprefixer", { grid: true }],
+                              ],
+                            },
+                          },
                     },
                     {
                         loader: 'sass-loader',
@@ -33,8 +83,12 @@ module.exports = {
                         options: {
                             esModule: false,
                             name: 'images/[folder]/[name].[ext]',
-                        }
-                    }
+                            publicPath: '/'
+                        },
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                    },
                 ]
             },
             {
@@ -54,6 +108,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: './css/main.css',
         }),

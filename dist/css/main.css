@@ -1,0 +1,24 @@
+.footer {
+  background-color: green; }
+
+body {
+  color: blue; }
+
+.title, .content__title-lg {
+  font-size: 1.6rem;
+  color: blue; }
+
+.content {
+  margin-right: 1.6rem;
+  -webkit-appearance: auto;
+     -moz-appearance: auto;
+          appearance: auto; }
+  .content__title-lg {
+    font-size: 2.4rem; }
+
+p[data-v-52e26b50] {
+  color: green;
+}
+
+
+/*# sourceMappingURL=main.css.map*/
